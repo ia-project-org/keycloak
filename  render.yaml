@@ -1,4 +1,3 @@
-# render.yaml
 services:
   - type: web
     name: keycloak
@@ -11,34 +10,21 @@ services:
       - key: KC_BOOTSTRAP_ADMIN_USERNAME
         value: admin
       - key: KC_BOOTSTRAP_ADMIN_PASSWORD
-        sync: false
+        value: oooo # Remplacez par un mot de passe fort
       - key: KC_DB
         value: postgres
+      - key: KC_DB_URL
+        value: jdbc:postgresql://dpg-ctkvo1tds78s73c328p0-a.oregon-postgres.render.com:5432/citythrillsdb # Remplacez par vos informations
       - key: KC_DB_URL_HOST
-        fromService:
-          type: postgres
-          name: keycloak-db
-          property: host
+        value: dpg-ctkvo1tds78s73c328p0-a # Remplacez par le host de votre DB
       - key: KC_DB_URL_PORT
-        fromService:
-          type: postgres
-          name: keycloak-db
-          property: port
+        value: 5432 # Remplacez par le port (par défaut 5432)
       - key: KC_DB_URL_DATABASE
-        fromService:
-          type: postgres
-          name: keycloak-db
-          property: database
+        value: citythrillsdb # Nom de votre base de données
       - key: KC_DB_USERNAME
-        fromService:
-          type: postgres
-          name: keycloak-db
-          property: user
+        value: citythrillsdb_user # Nom d'utilisateur de la base de données
       - key: KC_DB_PASSWORD
-        fromService:
-          type: postgres
-          name: keycloak-db
-          property: password
+        value: YVXb8u1Uj7QP8YDMJdHC8r3Y1nvKYnVz # Mot de passe de la base de données
       - key: KC_HOSTNAME
         value: keycloak-kv68.onrender.com
       - key: KC_HOSTNAME_STRICT
@@ -47,9 +33,4 @@ services:
         value: "false"
       - key: KC_HTTP_ENABLED
         value: "true"
-
-    dependencies:
-      - type: postgres
-        name: keycloak-db
-        ipAllowList: []
-        plan: free # ou choisissez un autre plan selon vos besoins
+    dependencies: []
