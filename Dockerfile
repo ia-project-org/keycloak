@@ -1,6 +1,9 @@
+# Dockerfile
 FROM quay.io/keycloak/keycloak:latest
 
 # Configuration de l'environnement
+ENV KC_BOOTSTRAP_ADMIN_USERNAME=admin
+ENV KC_BOOTSTRAP_ADMIN_PASSWORD=admin_password
 ENV KC_PROXY=edge
 ENV KC_HTTP_ENABLED=true
 ENV KC_HOSTNAME_STRICT=false
@@ -15,20 +18,11 @@ ENV KC_DB_URL_HOST=dpg-ctkvo1tds78s73c328p0-a
 ENV KC_DB_URL_PORT=5432
 ENV KC_DB_URL_DATABASE=citythrillsdb
 ENV KC_HOSTNAME=keycloak-kv68.onrender.com
-
-# Copier le fichier de configuration
-COPY config/standalone.xml /opt/keycloak/conf/standalone.xml
-
-# Copier le fichier de configuration de l'hôte
-COPY config/host.xml /opt/keycloak/conf/host.xml
-
 # Exposer le port 8080
 EXPOSE 8080
 
-# Installer des outils pour les tests réseau
-RUN apt-get update && apt-get install -y netcat
+# Construire d'abord en mode optimisé
+RUN /opt/keycloak/bin/kc.sh build
 
-# Vérifier la connectivité à PostgreSQL avant le démarrage
-CMD while ! nc -z $KC_DB_URL_HOST $KC_DB_URL_PORT; do \
-    echo "Waiting for PostgreSQL..."; sleep 3; done && \
-    /opt/keycloak/bin/kc.sh start --optimized
+# Démarrer Keycloak en mode production
+ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start", "--optimized"]
