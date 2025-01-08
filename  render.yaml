@@ -40,3 +40,4 @@ services:
 databases:
   - name: keycloak-db
     ipAllowList: []
+
