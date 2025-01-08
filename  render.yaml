@@ -4,8 +4,10 @@ services:
     name: keycloak
     env: docker
     buildCommand: docker build -t keycloak-render .
-    startCommand: docker run -p 8080:8080 keycloak-render
+    startCommand: docker run -p $PORT:8080 keycloak-render
     envVars:
+      - key: PORT
+        value: 8080
       - key: KEYCLOAK_ADMIN
         value: admin
       - key: KEYCLOAK_ADMIN_PASSWORD
