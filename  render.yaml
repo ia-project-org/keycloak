@@ -14,6 +14,16 @@ services:
         sync: false
       - key: KC_DB
         value: postgres
+      - key: KC_PROXY
+        value: edge
+      - key: KC_HOSTNAME
+        value: keycloak-kv68.onrender.com
+      - key: KC_HOSTNAME_STRICT
+        value: "false"
+      - key: KC_HOSTNAME_STRICT_HTTPS
+        value: "false"
+      - key: KC_HTTP_ENABLED
+        value: "true"
       - key: KC_DB_URL
         fromDatabase:
           name: keycloak-db
