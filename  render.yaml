@@ -1,0 +1,30 @@
+# render.yaml
+services:
+  - type: web
+    name: keycloak
+    env: docker
+    buildCommand: docker build -t keycloak-render .
+    startCommand: docker run -p 8080:8080 keycloak-render
+    envVars:
+      - key: KEYCLOAK_ADMIN
+        value: admin
+      - key: KEYCLOAK_ADMIN_PASSWORD
+        sync: false
+      - key: KC_DB
+        value: postgres
+      - key: KC_DB_URL
+        fromDatabase:
+          name: keycloak-db
+          property: connectionString
+      - key: KC_DB_USERNAME
+        fromDatabase:
+          name: keycloak-db
+          property: user
+      - key: KC_DB_PASSWORD
+        fromDatabase:
+          name: keycloak-db
+          property: password
+
+databases:
+  - name: keycloak-db
+    ipAllowList: []
