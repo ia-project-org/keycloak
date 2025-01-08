@@ -12,5 +12,8 @@ ENV KC_HOSTNAME_STRICT_HTTPS=false
 # Exposer le port 8080
 EXPOSE 8080
 
+# Construire d'abord en mode optimisé
+RUN /opt/keycloak/bin/kc.sh build
+
 # Démarrer Keycloak en mode production
 ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start", "--optimized"]
