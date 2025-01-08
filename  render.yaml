@@ -8,14 +8,37 @@ services:
     envVars:
       - key: PORT
         value: 8080
-      - key: KEYCLOAK_ADMIN
+      - key: KC_BOOTSTRAP_ADMIN_USERNAME
         value: admin
-      - key: KEYCLOAK_ADMIN_PASSWORD
+      - key: KC_BOOTSTRAP_ADMIN_PASSWORD
         sync: false
       - key: KC_DB
         value: postgres
-      - key: KC_PROXY
-        value: edge
+      - key: KC_DB_URL_HOST
+        fromService:
+          type: postgres
+          name: keycloak-db
+          property: host
+      - key: KC_DB_URL_PORT
+        fromService:
+          type: postgres
+          name: keycloak-db
+          property: port
+      - key: KC_DB_URL_DATABASE
+        fromService:
+          type: postgres
+          name: keycloak-db
+          property: database
+      - key: KC_DB_USERNAME
+        fromService:
+          type: postgres
+          name: keycloak-db
+          property: user
+      - key: KC_DB_PASSWORD
+        fromService:
+          type: postgres
+          name: keycloak-db
+          property: password
       - key: KC_HOSTNAME
         value: keycloak-kv68.onrender.com
       - key: KC_HOSTNAME_STRICT
@@ -24,20 +47,9 @@ services:
         value: "false"
       - key: KC_HTTP_ENABLED
         value: "true"
-      - key: KC_DB_URL
-        fromDatabase:
-          name: keycloak-db
-          property: connectionString
-      - key: KC_DB_USERNAME
-        fromDatabase:
-          name: keycloak-db
-          property: user
-      - key: KC_DB_PASSWORD
-        fromDatabase:
-          name: keycloak-db
-          property: password
 
-databases:
-  - name: keycloak-db
-    ipAllowList: []
-
+    dependencies:
+      - type: postgres
+        name: keycloak-db
+        ipAllowList: []
+        plan: free # ou choisissez un autre plan selon vos besoins

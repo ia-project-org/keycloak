@@ -2,14 +2,15 @@
 FROM quay.io/keycloak/keycloak:latest
 
 # Configuration de l'environnement
-ENV KEYCLOAK_ADMIN=admin
-ENV KEYCLOAK_ADMIN_PASSWORD=admin_password
+ENV KC_BOOTSTRAP_ADMIN_USERNAME=admin
+ENV KC_BOOTSTRAP_ADMIN_PASSWORD=admin_password
 ENV KC_PROXY=edge
 ENV KC_HTTP_ENABLED=true
 ENV KC_HOSTNAME_STRICT=false
 ENV KC_HOSTNAME_STRICT_HTTPS=false
 ENV KC_CACHE=local
 ENV KC_CACHE_STACK=local
+ENV KC_DB=postgres
 
 # Exposer le port 8080
 EXPOSE 8080
